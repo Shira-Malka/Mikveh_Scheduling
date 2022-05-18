@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class AdminMenuAppActivity extends AppCompatActivity {
 
     TextView admin_menu_header, tollbarTitle;
+    private Button mListMikveh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +25,20 @@ public class AdminMenuAppActivity extends AppCompatActivity {
 
         admin_menu_header = findViewById(R.id.admin_menu_header);
         tollbarTitle = findViewById(R.id.toolbar_title);
+        mListMikveh = (Button) findViewById(R.id.adm_list_btn);
 
         //admin menu has been clicked
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         tollbarTitle = findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
+
+        mListMikveh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AdminMenuAppActivity.this, MikvehListActivity.class));
+            }
+        });
+
     }
 
     @Override
@@ -40,18 +51,19 @@ public class AdminMenuAppActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.adm_profile:
+            case R.id.item1:
                 adminData();
                 return true;
 
-//            case R.id.adm_manage:
-//                //manage app users
-//                return true;
-//            case R.id.adm_settings:
+            case R.id.item2:
+                admManage();
+                return true;
+
+//            case R.id.item3:
 //                //settings
 //                return true;
 
-            case R.id.adm_logoff:
+            case R.id.item4:
                 logout();
                 return true;
 
@@ -62,6 +74,11 @@ public class AdminMenuAppActivity extends AppCompatActivity {
 
     public void adminData() {
         startActivity(new Intent(AdminMenuAppActivity.this, AdminProfile.class));
+    }
+
+    public void admManage() {
+        startActivity(new Intent(AdminMenuAppActivity.this, AdminManageAppUsers.class));
+
     }
 
     public void logout() {
